@@ -32,6 +32,10 @@ public class ListaProdutos {
             atual = atual.prox;
         }
     }
+
+    public void showProduct() {
+
+    }
 }
 
 
