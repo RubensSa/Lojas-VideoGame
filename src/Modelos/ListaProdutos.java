@@ -18,7 +18,7 @@ public class ListaProdutos {
             atual.prox = novo;
         }
     }
-
+    // Adicionar Produtos Lista Encadeada
     public void listar() {
         Produto atual = inicio;
         while (atual != null) {
