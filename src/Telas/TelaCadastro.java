@@ -4,6 +4,9 @@ import Modelos.Produto;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 public class TelaCadastro extends JFrame {
     private JTextField tfCodigo, tfDescricao, tfMarca, tfEntrada, tfSaida, tfQuantidade;
@@ -69,6 +72,14 @@ public class TelaCadastro extends JFrame {
 
                 Produto p = new Produto(codigo, descricao, marca, valorEntrada, valorSaida, quantidade);
                 lista.adicionar(p);
+
+                //Salvar Dados em Um Arquivo
+                try (FileWriter fw = new FileWriter("produtos.txt", true)) {
+                    fw.write("Codigo: " + codigo + "," + "Descrição: " + descricao + "," + "Marca: " + marca + "," + "Valor de Entrada: " + valorEntrada + "," + "Valor de Saída: " + valorSaida + "," + "Quantidade: " + quantidade + "\n");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
                 JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
             }
         });

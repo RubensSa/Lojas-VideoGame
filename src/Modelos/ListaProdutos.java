@@ -3,7 +3,7 @@ package Modelos;
 public class ListaProdutos {
     private Produto inicio;
 
-    public void ListaProdutos() {
+    public ListaProdutos() {
         this.inicio = null;
     }
 
