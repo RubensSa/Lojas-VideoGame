@@ -1,3 +1,4 @@
-1,Jogue,Mobile,500.0,1000.0,1
-2,Jogue,Mobile,500.0,1000.0,3
-Codigo: 3,Descrição: qualquer,Marca: Desktop,Valor de Entrada: 2000.0,Valor de Saída: 5000.0,Quantidade: 5
+
+
+Codigo: 1,Descrição: ps5,Marca: Playstation,Valor de Entrada: 1000.0,Valor de Saída: 2000.0,Quantidade: 12
+Codigo: 2,Descrição: ps6,Marca: PlayStation,Valor de Entrada: 2000.0,Valor de Saída: 1200.0,Quantidade: 12
