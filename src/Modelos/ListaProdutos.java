@@ -7,6 +7,10 @@ public class ListaProdutos {
         this.inicio = null;
     }
 
+    public void limpar() {
+        inicio = null;
+    }
+
     public void adicionar(Produto novo) {
         if (inicio == null) {
             inicio = novo;
@@ -87,11 +91,18 @@ public class ListaProdutos {
         return merge(esquerda, direita);
     }
 
+    private int cmp(String a, String b) {
+        if (a == null && b == null) return 0;
+        if (a == null) return 1;
+        if (b == null) return -1;
+        return a.compareToIgnoreCase(b);
+    }
+
     private Produto merge(Produto a, Produto b) {
         if (a == null) return b;
         if (b == null) return a;
 
-        if (a.descricao.compareToIgnoreCase(b.descricao) <= 0) {
+        if (cmp(a.descricao, b.descricao) <= 0) {
             a.prox = merge(a.prox, b);
             return a;
         } else {

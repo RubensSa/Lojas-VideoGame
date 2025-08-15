@@ -27,6 +27,7 @@ public class TelaGerenciarProdutos extends JFrame {
         String[] colunas = {"Código", "Descrição", "Marca", "Valor Entrada", "Valor Saída", "Quantidade"};
         modeloTabela = new DefaultTableModel(colunas, 0);
         tabela = new JTable(modeloTabela);
+        tabela.setAutoCreateRowSorter(false); // Desativa sorter automático
 
         JScrollPane scrollPane = new JScrollPane(tabela);
         add(scrollPane, BorderLayout.CENTER);
@@ -49,48 +50,53 @@ public class TelaGerenciarProdutos extends JFrame {
         add(painelBotoes, BorderLayout.SOUTH);
 
         btnRecarregar.addActionListener(e -> carregarDadosArquivo());
-
         btnEditar.addActionListener(e -> editarProduto());
         btnRepor.addActionListener(e -> reporEstoque());
         btnVender.addActionListener(e -> venderProduto());
         btnAlterarPreco.addActionListener(e -> alterarPrecos());
         btnOrdenar.addActionListener(e -> {
             lista.ordenarPorDescricao();
-            carregarDadosLista();
+            carregarTabela();
         });
 
-        carregarDadosArquivo();
+        carregarDadosArquivo(); // carrega ao abrir
     }
 
     private void carregarDadosArquivo() {
-        modeloTabela.setRowCount(0);
+        lista.limpar(); // limpa a lista antes de recarregar
+
         try (BufferedReader br = new BufferedReader(new FileReader("produtos.txt"))) {
             String linha;
             while ((linha = br.readLine()) != null) {
                 String[] partes = linha.split(",");
                 if (partes.length == 6) {
-                    String codigo = partes[0].split(":")[1].trim();
-                    String descricao = partes[1].split(":")[1].trim();
-                    String marca = partes[2].split(":")[1].trim();
+                    String codigo       = partes[0].split(":")[1].trim();
+                    String descricao    = partes[1].split(":")[1].trim();
+                    String marca        = partes[2].split(":")[1].trim();
                     String valorEntrada = partes[3].split(":")[1].trim();
-                    String valorSaida = partes[4].split(":")[1].trim();
-                    String quantidade = partes[5].split(":")[1].trim();
+                    String valorSaida   = partes[4].split(":")[1].trim();
+                    String quantidade   = partes[5].split(":")[1].trim();
 
-                    Produto p = new Produto(Integer.parseInt(codigo), descricao, marca,
-                            Double.parseDouble(valorEntrada), Double.parseDouble(valorSaida),
-                            Integer.parseInt(quantidade));
+                    Produto p = new Produto(
+                            Integer.parseInt(codigo),
+                            descricao,
+                            marca,
+                            Double.parseDouble(valorEntrada),
+                            Double.parseDouble(valorSaida),
+                            Integer.parseInt(quantidade)
+                    );
 
                     lista.adicionar(p);
-
-                    modeloTabela.addRow(new Object[]{codigo, descricao, marca, valorEntrada, valorSaida, quantidade});
                 }
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Erro ao ler arquivo: " + e.getMessage());
         }
+
+        carregarTabela();
     }
 
-    private void carregarDadosLista() {
+    private void carregarTabela() {
         modeloTabela.setRowCount(0);
         Produto atual = lista.getInicio();
         while (atual != null) {
@@ -120,7 +126,7 @@ public class TelaGerenciarProdutos extends JFrame {
         int novaQtd = Integer.parseInt(JOptionPane.showInputDialog("Nova quantidade:"));
 
         if (lista.editarProduto(codigo, novaDesc, novaMarca, novoEntrada, novoSaida, novaQtd)) {
-            carregarDadosLista();
+            carregarTabela();
             JOptionPane.showMessageDialog(this, "Produto editado com sucesso!");
         }
     }
@@ -135,7 +141,7 @@ public class TelaGerenciarProdutos extends JFrame {
         int qtd = Integer.parseInt(JOptionPane.showInputDialog("Quantidade para repor:"));
 
         if (lista.reporEstoque(codigo, qtd)) {
-            carregarDadosLista();
+            carregarTabela();
             JOptionPane.showMessageDialog(this, "Estoque atualizado!");
         }
     }
@@ -150,7 +156,7 @@ public class TelaGerenciarProdutos extends JFrame {
         int qtd = Integer.parseInt(JOptionPane.showInputDialog("Quantidade para vender:"));
 
         if (lista.venderProduto(codigo, qtd)) {
-            carregarDadosLista();
+            carregarTabela();
             JOptionPane.showMessageDialog(this, "Venda realizada!");
         } else {
             JOptionPane.showMessageDialog(this, "Quantidade insuficiente.");
@@ -160,24 +166,7 @@ public class TelaGerenciarProdutos extends JFrame {
     private void alterarPrecos() {
         double perc = Double.parseDouble(JOptionPane.showInputDialog("Percentual de aumento/redução (%):"));
         lista.alterarPrecos(perc);
-        carregarDadosLista();
+        carregarTabela();
         JOptionPane.showMessageDialog(this, "Preços atualizados!");
-    }
-    private void carregarTabela() {
-        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
-        modelo.setRowCount(0);
-
-        Produto atual = lista.getInicio();
-        while (atual != null) {
-            modelo.addRow(new Object[]{
-                    atual.codigo,
-                    atual.descricao,
-                    atual.marca,
-                    atual.valorEntrada,
-                    atual.valorSaida,
-                    atual.quantidade
-            });
-            atual = atual.prox;
-        }
     }
 }
