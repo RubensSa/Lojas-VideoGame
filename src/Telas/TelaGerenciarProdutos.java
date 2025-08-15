@@ -163,4 +163,21 @@ public class TelaGerenciarProdutos extends JFrame {
         carregarDadosLista();
         JOptionPane.showMessageDialog(this, "Preços atualizados!");
     }
+    private void carregarTabela() {
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        modelo.setRowCount(0);
+
+        Produto atual = lista.getInicio();
+        while (atual != null) {
+            modelo.addRow(new Object[]{
+                    atual.codigo,
+                    atual.descricao,
+                    atual.marca,
+                    atual.valorEntrada,
+                    atual.valorSaida,
+                    atual.quantidade
+            });
+            atual = atual.prox;
+        }
+    }
 }

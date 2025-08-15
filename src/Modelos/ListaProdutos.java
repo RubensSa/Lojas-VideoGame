@@ -2,11 +2,11 @@ package Modelos;
 
 public class ListaProdutos {
     private Produto inicio;
-    private Produto[] produtos;
 
     public ListaProdutos() {
         this.inicio = null;
     }
+
     public void adicionar(Produto novo) {
         if (inicio == null) {
             inicio = novo;
@@ -18,25 +18,7 @@ public class ListaProdutos {
             atual.prox = novo;
         }
     }
-    public void listar() {
-        Produto atual = inicio;
-        while (atual != null) {
-            System.out.println("Código: " + atual.codigo);
-            System.out.println("Descrição: " + atual.descricao);
-            System.out.println("Marca: " + atual.marca);
-            System.out.println("Valor Entrada: R$" + atual.valorEntrada);
-            System.out.println("Valor Saída: R$" + atual.valorSaida);
-            System.out.println("Quantidade: " + atual.quantidade);
-            System.out.println("----------------------");
-            atual = atual.prox;
-        }
-    }
-    public Produto buscarPorDescricao(String desc) {
-        for (Produto p : produtos) {
-            if (p.getDescricao().equalsIgnoreCase(desc)) return p;
-        }
-        return null;
-    }
+
     public Produto buscarPorCodigo(int codigo) {
         Produto atual = inicio;
         while (atual != null) {
@@ -47,6 +29,7 @@ public class ListaProdutos {
         }
         return null;
     }
+
     public boolean editarProduto(int codigo, String novaDescricao, String novaMarca,
                                  double novoValorEntrada, double novoValorSaida, int novaQuantidade) {
         Produto p = buscarPorCodigo(codigo);
@@ -60,6 +43,7 @@ public class ListaProdutos {
         }
         return false;
     }
+
     public boolean reporEstoque(int codigo, int quantidade) {
         Produto p = buscarPorCodigo(codigo);
         if (p != null) {
@@ -68,15 +52,16 @@ public class ListaProdutos {
         }
         return false;
     }
+
     public boolean venderProduto(int codigo, int quantidade) {
         Produto p = buscarPorCodigo(codigo);
         if (p != null && p.quantidade >= quantidade) {
             p.quantidade -= quantidade;
-            // Aqui você pode registrar no relatório de vendas
             return true;
         }
         return false;
     }
+
     public void alterarPrecos(double percentual) {
         Produto atual = inicio;
         while (atual != null) {
@@ -85,9 +70,11 @@ public class ListaProdutos {
             atual = atual.prox;
         }
     }
+
     public void ordenarPorDescricao() {
         inicio = mergeSort(inicio);
     }
+
     private Produto mergeSort(Produto head) {
         if (head == null || head.prox == null) return head;
         Produto meio = getMiddle(head);
@@ -99,6 +86,7 @@ public class ListaProdutos {
 
         return merge(esquerda, direita);
     }
+
     private Produto merge(Produto a, Produto b) {
         if (a == null) return b;
         if (b == null) return a;
@@ -111,6 +99,7 @@ public class ListaProdutos {
             return b;
         }
     }
+
     private Produto getMiddle(Produto head) {
         if (head == null) return head;
         Produto lento = head, rapido = head.prox;
@@ -120,6 +109,7 @@ public class ListaProdutos {
         }
         return lento;
     }
+
     public Produto getInicio() {
         return inicio;
     }

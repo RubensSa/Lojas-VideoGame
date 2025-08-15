@@ -2,3 +2,7 @@
 
 Codigo: 1,Descrição: ps5,Marca: Playstation,Valor de Entrada: 1000.0,Valor de Saída: 2000.0,Quantidade: 12
 Codigo: 2,Descrição: ps6,Marca: PlayStation,Valor de Entrada: 2000.0,Valor de Saída: 1200.0,Quantidade: 12
+Codigo: 0,Descrição: xbox,Marca: lenovo,Valor de Entrada: 1233.0,Valor de Saída: 1000.0,Quantidade: 10
+Codigo: 4,Descrição: swit,Marca: nitendo,Valor de Entrada: 1999.0,Valor de Saída: 2000.0,Quantidade: 10
+Codigo: 5,Descrição: nitendoDs,Marca: Nitendo,Valor de Entrada: 1000.0,Valor de Saída: 2000.0,Quantidade: 20
+Codigo: 6,Descrição: about,Marca: playStation,Valor de Entrada: 1200.0,Valor de Saída: 1000.0,Quantidade: 20
