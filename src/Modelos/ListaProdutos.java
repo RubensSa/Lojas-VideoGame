@@ -1,5 +1,7 @@
 package Modelos;
 
+import javax.swing.*;
+
 public class ListaProdutos {
     private Produto inicio;
 
